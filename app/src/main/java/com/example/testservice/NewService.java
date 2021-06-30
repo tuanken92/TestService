@@ -18,6 +18,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.LogRecord;
 
@@ -29,7 +31,7 @@ public class NewService extends Service {
     // declaring object of MediaPlayer
     private MediaPlayer player;
     final String TAG = "atk.service";
-
+    ArrayList<String> list_string_data;
 
     @Override
 
@@ -79,7 +81,13 @@ public class NewService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, String.format("...........onCreate function....."));
+        list_string_data = new ArrayList<String>();
+        for(int i = 0; i < 100; i++)
+        {
+            list_string_data.add(String.format("%d", i));
+        }
+
+        Log.i(TAG, String.format("...........onCreate function.....size of list_string_data = %d", list_string_data.size()));
     }
 
     @Override
@@ -105,6 +113,7 @@ public class NewService extends Service {
         final int random = new Random().nextInt(10000);
         intent.setAction("SOME_ACTION");
         intent.putExtra("alo", random);
+        intent.putExtra("mylist", list_string_data);
         sendBroadcast(intent);
     }
 

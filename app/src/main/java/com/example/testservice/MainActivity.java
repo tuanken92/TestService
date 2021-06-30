@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -65,7 +66,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onReceive(Context context, Intent intent) {
                 //do something based on the intent's action
                 int arg1 = intent.getIntExtra("alo",0);
-                Toast.makeText(getApplicationContext(), String.valueOf(arg1), Toast.LENGTH_SHORT).show();
+
+                ArrayList<String> list_string_data = (ArrayList<String>) intent.getSerializableExtra("mylist");
+                String str_data ="";
+                for(int i = 0; i < list_string_data.size(); i++)
+                {
+                    str_data = str_data + list_string_data.get(i);
+                }
+
+                Toast.makeText(getApplicationContext(), str_data, Toast.LENGTH_SHORT).show();
             }
         };
         registerReceiver(broadcastReceiver, filter);
